@@ -37,5 +37,14 @@
 
     data: () => ({
     }),
+    mounted() {
+      const axios = require('axios');
+      axios
+        .get(`https://api.unsplash.com/topics?client_id=${this.$unSplashAPIKey}`)
+        .then(res => {
+          console.log(`statusCode: ${res.status}`)
+          console.log(res)
+        })
+    }
   }
 </script>

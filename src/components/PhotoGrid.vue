@@ -31,14 +31,13 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
   export default {
     name: 'PhotoGrid',
 
     data: () => ({
     }),
     mounted() {
-      const axios = require('axios');
       axios
         .get(`https://api.unsplash.com/topics?client_id=${this.$unSplashAPIKey}`)
         .then(res => {

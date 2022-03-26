@@ -38,19 +38,19 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <PhotoGrid/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import PhotoGrid from './components/PhotoGrid';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    PhotoGrid,
   },
 
   data: () => ({

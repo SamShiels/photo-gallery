@@ -1,14 +1,13 @@
 <template>
-  <v-container>
+  <v-container ref="container">
     <v-row>
       <v-col
-        v-for="n in 9"
+        v-for="n in imageSources.length"
         :key="n"
         class="d-flex child-flex"
-        cols="4"
       >
         <PhotoHandler
-          :imageSource="imageSources[n]"
+          :imageSource="imageSources[n - 1]"
           :placeholderSource="placeholderSource"
         ></PhotoHandler>
       </v-col>
@@ -25,20 +24,27 @@ export default {
   components: {
     PhotoHandler,
   },
+  props: {
+    topic: String
+  },
   data: () => ({
     imageSources: [],
     placeholderSource: require("@/assets/logo.svg")
   }),
   mounted() {
-    const axios = require('axios');
+    this.loadImages('12', '3');
+  },
+  methods: {
+    loadImages(amount, page) {
+      const axios = require('axios');
 
-    axios
-      .get(`https://api.unsplash.com/topics/wallpapers/photos?client_id=${this.$unSplashAPIKey}`)
+      axios.get(`https://api.unsplash.com/topics/${this.topic}/photos?client_id=${this.$unSplashAPIKey}&per_page=${amount}&page=${page}`)
       .then(res => {
         console.log(res);
 
         this.imageSources = res.data.map((imageData) => imageData.urls.regular);
       })
+    }
   }
 }
 </script>

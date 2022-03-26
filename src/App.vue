@@ -38,7 +38,7 @@
     </v-app-bar>
 
     <v-main>
-      <PhotoGrid/>
+      <PhotoGrid topic="wallpapers"></PhotoGrid>
     </v-main>
   </v-app>
 </template>

@@ -7,44 +7,38 @@
         class="d-flex child-flex"
         cols="4"
       >
-        <v-img
-          :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-          :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-          aspect-ratio="1"
-          class="grey lighten-2"
-        >
-          <template v-slot:placeholder>
-            <v-row
-              class="fill-height ma-0"
-              align="center"
-              justify="center"
-            >
-              <v-progress-circular
-                indeterminate
-                color="grey lighten-5"
-              ></v-progress-circular>
-            </v-row>
-          </template>
-        </v-img>
+        <PhotoHandler
+          :imageSource="imageSources[n]"
+          :placeholderSource="placeholderSource"
+        ></PhotoHandler>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-  export default {
-    name: 'PhotoGrid',
+import PhotoHandler from './PhotoHandler';
 
-    data: () => ({
-    }),
-    mounted() {
-      const axios = require('axios');
-      axios
-        .get(`https://api.unsplash.com/topics?client_id=${this.$unSplashAPIKey}`)
-        .then(res => {
-          console.log(`statusCode: ${res.status}`)
-          console.log(res)
-        })
-    }
+export default {
+  name: 'PhotoGrid',
+
+  components: {
+    PhotoHandler,
+  },
+  data: () => ({
+    imageSources: [],
+    placeholderSource: require("@/assets/logo.svg")
+  }),
+  mounted() {
+    const axios = require('axios');
+
+    axios
+      .get(`https://api.unsplash.com/topics/wallpapers/photos?client_id=${this.$unSplashAPIKey}`)
+      .then(res => {
+        console.log(res);
+
+        this.imageSources = res.data.map((imageData) => imageData.urls.regular);
+      })
   }
+}
 </script>

@@ -38,6 +38,7 @@ export default {
   },
   data: () => ({
     imageSources: [],
+    imageSourceTargetCount: 0,
     placeholderSource: require("@/assets/logo.svg"),
     currentPage: 0,
     maxImagesX: 0,
@@ -67,6 +68,7 @@ export default {
   methods: {
     loadImages(amount, page) {
       const axios = require('axios');
+      this.imageSourceTargetCount += amount;
 
       axios.get(`https://api.unsplash.com/topics/${this.topic}/photos?client_id=${this.$unSplashAPIKey}&per_page=${amount.toString()}&page=${page.toString()}`)
       .then(res => {
@@ -74,21 +76,16 @@ export default {
 
         const newSources = res.data.map((imageData) => imageData.urls.regular);
         this.imageSources.push(...newSources);
-      })
+      });
     },
     calculateMaxImages() {
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight - 56;
       // Calculate the amount of images we can on the screen (including ones slightly obscured by the app borders)
-      let maxImagesX = Math.ceil(screenWidth / 200);// + this.currentPage > 0 ? 1 : 0;
+      let maxImagesX = Math.ceil(screenWidth / 200);
       const maxImagesY = Math.floor(screenHeight / 200);
 
-      if (this.currentPage > 0) {
-        // Increment the x-axis image count if we are not on page 1. This is to compensate for the image column visible to the left
-        maxImagesX++;
-      }
-
-      const previousImageSourceCount = this.imageSources.length;
+      const previousImageSourceCount = this.imageSourceTargetCount;
       const newImageSourceCount = maxImagesX * maxImagesY;
 
       if (newImageSourceCount > previousImageSourceCount) {

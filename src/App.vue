@@ -60,7 +60,7 @@ export default {
   }),
   mounted() {
     this.setGridHeight();
-    window.addEventListener("resize", () => this.setGridHeight());
+    window.addEventListener("resize", this.setGridHeight);
   },
   methods: {
     setGridHeight() {

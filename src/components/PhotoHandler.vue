@@ -1,5 +1,6 @@
 <template>
-    <v-img
+  <div>
+    <v-img v-if="selected"
       :src="imageSource"
       :lazy-src="placeholderSource"
       aspect-ratio="1"
@@ -20,6 +21,7 @@
         </v-row>
       </template>
     </v-img>
+  </div>
 </template>
 
 <script>
@@ -27,7 +29,8 @@
     name: 'PhotoHandler',
     props: {
       imageSource: String,
-      placeholderSource: String
+      placeholderSource: String,
+      selected: Boolean
     }
   }
 </script>

@@ -8,7 +8,13 @@
       <PhotoHandler
         :imageSource="imageSources[n - 1]"
         :placeholderSource="placeholderSource"
+        :selected="selectedImageSource === n - 1"
       ></PhotoHandler>
+      <PhotoSelector
+       :maxWidth="maxImagesX"
+       :maxHeight="maxImagesY"
+       v-on:keypressed="selectionChanged"
+      ></PhotoSelector>
     </div>
   </div>
 </template>
@@ -25,12 +31,14 @@
 
 <script>
 import PhotoHandler from './PhotoHandler';
+import PhotoSelector from './PhotoSelector';
 
 export default {
   name: 'PhotoGrid',
 
   components: {
     PhotoHandler,
+    PhotoSelector,
   },
   props: {
     topic: String,
@@ -44,6 +52,8 @@ export default {
     maxImagesX: 0,
     maxImagesY: 0,
 
+    selectedImageSource: 0,
+
     gridStyle: {
       maxHeight: '100vh',
       display: 'grid',
@@ -54,8 +64,8 @@ export default {
   }),
   watch: {
     gridHeight: function(value) {
-      // We inject a custom max height value because CSS does not give us an accurate value for the view space.
-      // This is because we are using an app bar.
+      // We inject a custom max height because CSS does not give us an accurate value for the view space.
+      // This is because of html parenting.
       const valueString = value.toString()+'px';
       this.gridStyle.maxHeight = valueString;
     }
@@ -104,6 +114,13 @@ export default {
 
       console.log('screenWidth: ' + screenWidth);
       console.log('screenHeight: ' + screenHeight);
+    },
+    selectionChanged(x, y) {
+      console.log('New selection');
+      console.log(x);
+      console.log(y);
+
+      this.selectedImageSource = y + x * (this.maxImagesY);
     }
   }
 }

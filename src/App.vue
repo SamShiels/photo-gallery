@@ -3,7 +3,7 @@
     <v-app-bar
       app
       color="primary"
-      dark
+      style="height:64px"
     >
       <div class="d-flex align-center">
         <v-img
@@ -39,7 +39,7 @@
 
     <v-main id="main">
       <div>
-        <PhotoGrid topic="wallpapers"></PhotoGrid>
+        <PhotoGrid topic="wallpapers" :gridHeight="gridHeight"></PhotoGrid>
       </div>
     </v-main>
   </v-app>
@@ -56,7 +56,16 @@ export default {
   },
 
   data: () => ({
-    //
+    gridHeight: 0
   }),
+  mounted() {
+    this.setGridHeight();
+    window.addEventListener("resize", () => this.setGridHeight());
+  },
+  methods: {
+    setGridHeight() {
+      this.gridHeight = window.innerHeight - 64;
+    }
+  }
 };
 </script>

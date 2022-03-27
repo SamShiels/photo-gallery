@@ -1,5 +1,5 @@
 <template>
-  <div class="grid">
+  <div v-bind:style="gridStyle">
     <div
       v-for="n in (maxImagesX * maxImagesY)"
       :key="n"
@@ -33,15 +33,32 @@ export default {
     PhotoHandler,
   },
   props: {
-    topic: String
+    topic: String,
+    gridHeight: Number
   },
   data: () => ({
     imageSources: [],
     placeholderSource: require("@/assets/logo.svg"),
     currentPage: 0,
     maxImagesX: 0,
-    maxImagesY: 0
+    maxImagesY: 0,
+
+    gridStyle: {
+      maxHeight: '100vh',
+      display: 'grid',
+      gridAutoFlow: 'column',
+      gridTemplateColumns: 'repeat(auto-fill, 200px)',
+      gridTemplateRows: 'repeat(auto-fill, 200px)'
+    }
   }),
+  watch: {
+    gridHeight: function(value) {
+      // We inject a custom max height value because CSS does not give us an accurate value for the view space.
+      // This is because we are using an app bar.
+      const valueString = value.toString()+'px';
+      this.gridStyle.maxHeight = valueString;
+    }
+  },
   mounted() {
     //this.loadImages(10, 1);
     this.calculateMaxImages();

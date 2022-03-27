@@ -37,8 +37,10 @@
       </v-btn>
     </v-app-bar>
 
-    <v-main>
-      <PhotoGrid topic="wallpapers"></PhotoGrid>
+    <v-main id="main">
+      <div>
+        <PhotoGrid topic="wallpapers"></PhotoGrid>
+      </div>
     </v-main>
   </v-app>
 </template>

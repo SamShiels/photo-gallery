@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
     <div
-      v-for="n in imageSources.length"
+      v-for="n in (maxImagesX * maxImagesY)"
       :key="n"
       style="width: 200px"
     >
@@ -43,7 +43,8 @@ export default {
     maxImagesY: 0
   }),
   mounted() {
-    this.loadImages(10, 1);
+    //this.loadImages(10, 1);
+    this.calculateMaxImages();
     window.addEventListener('resize', this.calculateMaxImages);
   },
   methods: {
@@ -74,7 +75,11 @@ export default {
       const newImageSourceCount = maxImagesX * maxImagesY;
 
       if (newImageSourceCount > previousImageSourceCount) {
-        //this.loadImages();
+        const difference = newImageSourceCount - previousImageSourceCount;
+        const page = previousImageSourceCount / difference + 1;
+        console.log('page: ' + page);
+        console.log('difference: ' + difference);
+        this.loadImages(parseInt(difference), parseInt(page));
       }
 
       this.maxImagesX = maxImagesX;

@@ -1,10 +1,10 @@
 <template>
-  <v-container ref="container">
-    <v-row>
+  <v-container ref="container" fluid>
+    <v-row style="max-height: 85vh; flex-direction: column">
       <v-col
         v-for="n in imageSources.length"
         :key="n"
-        class="d-flex child-flex"
+        style="width: 200px"
       >
         <PhotoHandler
           :imageSource="imageSources[n - 1]"
@@ -32,13 +32,13 @@ export default {
     placeholderSource: require("@/assets/logo.svg")
   }),
   mounted() {
-    this.loadImages('12', '3');
+    this.loadImages(48, 1);
   },
   methods: {
     loadImages(amount, page) {
       const axios = require('axios');
 
-      axios.get(`https://api.unsplash.com/topics/${this.topic}/photos?client_id=${this.$unSplashAPIKey}&per_page=${amount}&page=${page}`)
+      axios.get(`https://api.unsplash.com/topics/${this.topic}/photos?client_id=${this.$unSplashAPIKey}&per_page=${amount.toString()}&page=${page.toString()}`)
       .then(res => {
         console.log(res);
 

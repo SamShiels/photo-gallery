@@ -1,10 +1,11 @@
 <template>
-  <v-container>
     <v-img
       :src="imageSource"
       :lazy-src="placeholderSource"
       aspect-ratio="1"
       class="grey lighten-2"
+      max-width="200"
+      max-height="200"
     >
       <template v-slot:placeholder>
         <v-row
@@ -19,7 +20,6 @@
         </v-row>
       </template>
     </v-img>
-  </v-container>
 </template>
 
 <script>

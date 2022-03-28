@@ -6,16 +6,16 @@
       style="width: 400px"
     >
       <PhotoHandler
-        :imageSource="imageSources[n - 1]"
+        :imageSource="imageSources[n - 1 + currentPage * maxImagesY]"
         :placeholderSource="placeholderSource"
         :selected="selectedImageSource === n - 1"
       ></PhotoHandler>
-      <PhotoSelector
-       :maxWidth="maxImagesX"
-       :maxHeight="maxImagesY"
-       v-on:keypressed="selectionChanged"
-      ></PhotoSelector>
     </div>
+    <PhotoSelector
+      :maxWidth="maxImagesX"
+      :maxHeight="maxImagesY"
+      v-on:keypressed="selectionChanged"
+    ></PhotoSelector>
   </div>
 </template>
 
@@ -86,7 +86,6 @@ export default {
 
         const newSources = res.data.map((imageData) => imageData.urls.regular);
         this.imageSources.push(...newSources);
-        console.log(this.imageSources.length);
       });
     },
     calculateMaxImages() {
@@ -97,13 +96,11 @@ export default {
       const maxImagesY = Math.floor(screenHeight / 400);
 
       const previousImageSourceCount = this.imageSourceTargetCount;
-      const newImageSourceCount = maxImagesX * maxImagesY;
+      const newImageSourceCount = (maxImagesX + this.currentPage) * maxImagesY;
 
       if (newImageSourceCount > previousImageSourceCount) {
         const difference = newImageSourceCount - previousImageSourceCount;
         const page = previousImageSourceCount / difference + 1;
-        console.log('page: ' + page);
-        console.log('difference: ' + difference);
         this.loadImages(parseInt(difference), parseInt(page));
       }
 
@@ -116,12 +113,10 @@ export default {
       console.log('screenWidth: ' + screenWidth);
       console.log('screenHeight: ' + screenHeight);
     },
-    selectionChanged(x, y) {
-      console.log('New selection');
-      console.log(x);
-      console.log(y);
-
+    selectionChanged(x, y, pageAdvance) {
       this.selectedImageSource = y + x * (this.maxImagesY);
+      this.currentPage = Math.max(0, this.currentPage + pageAdvance);
+      this.calculateMaxImages();
     }
   }
 }

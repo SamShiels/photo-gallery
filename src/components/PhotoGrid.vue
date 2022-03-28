@@ -3,7 +3,7 @@
     <div
       v-for="n in (maxImagesX * maxImagesY)"
       :key="n"
-      style="width: 200px"
+      style="width: 400px"
     >
       <PhotoHandler
         :imageSource="imageSources[n - 1]"
@@ -24,8 +24,8 @@
     max-height: 100vh;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fill, 200px);
-    grid-template-rows: repeat(auto-fill, 200px);
+    grid-template-columns: repeat(auto-fill, 400px);
+    grid-template-rows: repeat(auto-fill, 400px);
   }
 </style>
 
@@ -58,8 +58,8 @@ export default {
       maxHeight: '100vh',
       display: 'grid',
       gridAutoFlow: 'column',
-      gridTemplateColumns: 'repeat(auto-fill, 200px)',
-      gridTemplateRows: 'repeat(auto-fill, 200px)'
+      gridTemplateColumns: 'repeat(auto-fill, 400px)',
+      gridTemplateRows: 'repeat(auto-fill, 400px)'
     }
   }),
   watch: {
@@ -86,14 +86,15 @@ export default {
 
         const newSources = res.data.map((imageData) => imageData.urls.regular);
         this.imageSources.push(...newSources);
+        console.log(this.imageSources.length);
       });
     },
     calculateMaxImages() {
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight - 56;
       // Calculate the amount of images we can on the screen (including ones slightly obscured by the app borders)
-      let maxImagesX = Math.ceil(screenWidth / 200);
-      const maxImagesY = Math.floor(screenHeight / 200);
+      let maxImagesX = Math.ceil(screenWidth / 400);
+      const maxImagesY = Math.floor(screenHeight / 400);
 
       const previousImageSourceCount = this.imageSourceTargetCount;
       const newImageSourceCount = maxImagesX * maxImagesY;

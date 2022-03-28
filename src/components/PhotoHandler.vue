@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <v-img v-if="selected"
+  <div >
+    <v-img
       :src="imageSource"
       :lazy-src="placeholderSource"
       aspect-ratio="1"
-      class="grey lighten-2"
-      max-width="200"
-      max-height="200"
+      max-width="400"
+      max-height="400"
+      v-bind:style="image"
     >
       <template v-slot:placeholder>
         <v-row
@@ -31,6 +31,19 @@
       imageSource: String,
       placeholderSource: String,
       selected: Boolean
+    },
+    watch: {
+      selected: function(value) {
+        this.image.border = value ? "8px solid rgb(50, 87, 153)" : "";
+      }
+    },
+    data: () => ({
+      image: {
+        border: "",
+      }
+    }),
+    mounted() {
+      this.image.border = this.selected ? "8px solid rgb(50, 87, 153)" : "";
     }
   }
 </script>

@@ -9,7 +9,7 @@
       <div class="d-flex align-center">
         <v-toolbar-title
           color="white"
-        >Photo Gallery</v-toolbar-title>
+        >{{ topicSelected.title }}</v-toolbar-title>
       </div>
 
       <v-spacer></v-spacer>

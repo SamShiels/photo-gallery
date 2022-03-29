@@ -8,7 +8,7 @@
       <PhotoHandler
         :imageSource="imageSources[n - 1 + currentPage * maxImagesY]"
         :placeholderSource="imageSources[n - 1 + currentPage * maxImagesY]"
-        :selected="selectedImageSource === n - 1"
+        :selected="currentSelectedPhotoHandler === n - 1"
       ></PhotoHandler>
     </div>
     <PhotoSelector
@@ -20,8 +20,24 @@
     ></PhotoSelector>
     <PhotoEnlarger
       ref="enlarger"
-      :imageSource="imageSources[selectedImageSource]"
+      :imageSource="imageSources[currentSelectedPhotoHandler + currentPage * maxImagesY]"
     ></PhotoEnlarger>
+    <div
+      style="text-shadow: 2px 2px 2px grey;
+        position: absolute; padding: 10px; display: block; right: 50px; top:42vh;"
+      >
+      <v-icon dark x-large>
+        mdi-arrow-right-bold-circle-outline
+      </v-icon>
+    </div>
+      <div v-if="currentPage > 0"
+      style="text-shadow: 2px 2px 2px grey;
+        position: absolute; padding: 10px; display: block; left: 50px; top:42vh;"
+      >
+      <v-icon dark x-large>
+        mdi-arrow-left-bold-circle-outline
+      </v-icon>
+    </div>
   </div>
 </template>
 
@@ -51,7 +67,8 @@ export default {
     maxImagesX: 0,
     maxImagesY: 0,
 
-    selectedImageSource: 0,
+    // the current
+    currentSelectedPhotoHandler: 0,
 
     gridStyle: {
       maxHeight: '100vh',
@@ -110,8 +127,8 @@ export default {
       this.maxImagesY = maxImagesY;
     },
     selectionChanged(x, y, pageAdvance) {
-      this.selectedImageSource = y + x * (this.maxImagesY);
       this.currentPage = Math.max(0, this.currentPage + pageAdvance);
+      this.currentSelectedPhotoHandler = y + x * (this.maxImagesY);
       this.calculateMaxImages();
     },
     enlargePhoto() {

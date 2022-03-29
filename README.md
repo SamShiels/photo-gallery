@@ -1,24 +1,18 @@
 # photo-gallery
 
 ## Project setup
+
+Clone the repository, navigate to the root directory and run:
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Running the project
+
+Use the following command to build and run the project on a local dev server:
+
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Open your browser and navigate to `localhost:8080`

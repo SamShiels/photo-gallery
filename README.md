@@ -21,4 +21,6 @@ Open your browser and navigate to `localhost:8080`
 
 Use the arrow keys to navigate through the grid of photos. You can scroll to the right and left by selecting photos off-screen.
 
-The current photo topic can be changed by pressing the `escape` key. This opens a left-side drawer which contains a list of topics. You can then scroll through them using the `up` and `down` arrow keys.
+The `space` bar opens a dialog which displays an enlarged version of the selected image. Use `escape` to close.
+
+The current photo topic can be changed by pressing the `tab` key. This opens a left-side drawer which contains a list of topics. You can then scroll through them using the `up` and `down` arrow keys.

@@ -20,16 +20,6 @@
   </div>
 </template>
 
-<style>
-  .grid {
-    max-height: 100vh;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fill, 400px);
-    grid-template-rows: repeat(auto-fill, 400px);
-  }
-</style>
-
 <script>
 import PhotoHandler from './PhotoHandler';
 import PhotoSelector from './PhotoSelector';
@@ -113,12 +103,6 @@ export default {
 
       this.maxImagesX = maxImagesX;
       this.maxImagesY = maxImagesY;
-
-      console.log('maxImagesX: ' + this.maxImagesX);
-      console.log('maxImagesY: ' + this.maxImagesY);
-
-      console.log('screenWidth: ' + screenWidth);
-      console.log('screenHeight: ' + screenHeight);
     },
     selectionChanged(x, y, pageAdvance) {
       this.selectedImageSource = y + x * (this.maxImagesY);

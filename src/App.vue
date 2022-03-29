@@ -86,8 +86,6 @@ export default {
 
     axios.get(`https://api.unsplash.com/topics?client_id=${this.$unSplashAPIKey}`)
     .then(res => {
-      console.log(res);
-      
       this.topics = res.data.map((topic) => {
         return {
           slug: topic.slug,
@@ -103,7 +101,7 @@ export default {
       this.gridHeight = window.innerHeight - 64;
     },
     detectKeyPress(event) {
-      if (event.keyCode === 27) {
+      if (event.keyCode === 9) {
         this.drawer = !this.drawer;
       }
 

@@ -15,14 +15,20 @@
       :maxWidth="maxImagesX"
       :maxHeight="maxImagesY"
       :canSelect="canSelect"
-      v-on:keypressed="selectionChanged"
+      v-on:arrowPressed="selectionChanged"
+      v-on:spacePressed="enlargePhoto"
     ></PhotoSelector>
+    <PhotoEnlarger
+      ref="enlarger"
+      :imageSource="imageSources[selectedImageSource]"
+    ></PhotoEnlarger>
   </div>
 </template>
 
 <script>
 import PhotoHandler from './PhotoHandler';
 import PhotoSelector from './PhotoSelector';
+import PhotoEnlarger from './PhotoEnlarger';
 
 export default {
   name: 'PhotoGrid',
@@ -30,6 +36,7 @@ export default {
   components: {
     PhotoHandler,
     PhotoSelector,
+    PhotoEnlarger,
   },
   props: {
     topic: Object,
@@ -79,8 +86,6 @@ export default {
 
       axios.get(`https://api.unsplash.com/topics/${this.topic.slug}/photos?client_id=${this.$unSplashAPIKey}&per_page=${amount.toString()}&page=${page.toString()}`)
       .then(res => {
-        console.log(res);
-
         const newSources = res.data.map((imageData) => imageData.urls.regular);
         this.imageSources.push(...newSources);
       });
@@ -108,6 +113,9 @@ export default {
       this.selectedImageSource = y + x * (this.maxImagesY);
       this.currentPage = Math.max(0, this.currentPage + pageAdvance);
       this.calculateMaxImages();
+    },
+    enlargePhoto() {
+      this.$refs.enlarger.open();
     }
   }
 }

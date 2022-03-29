@@ -17,9 +17,11 @@
     }),
     mounted() {
       window.addEventListener('keydown', this.detectArrowPress);
+      window.addEventListener('keydown', this.detectSpacePress);
     },
     unmounted() {
       window.removeEventListener('keydown', this.detectArrowPress);
+      window.removeEventListener('keydown', this.detectSpacePress);
     },
     methods: {
       detectArrowPress(event) {
@@ -62,9 +64,18 @@
         }
 
         if (emitEvent) {
-          this.$emit('keypressed', this.currentPositionX, this.currentPositionY, pageAdvance);
+          this.$emit('arrowPressed', this.currentPositionX, this.currentPositionY, pageAdvance);
         }
         this.canEmitKeydownEvent = false;
+      },
+      detectSpacePress(event) {
+        if (this.canSelect === false) {
+          return;
+        }
+
+        if (event.keyCode === 32) {
+          this.$emit('spacePressed');
+        }
       }
     }
   }

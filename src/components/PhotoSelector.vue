@@ -8,6 +8,7 @@
     props: {
       maxWidth: Number,
       maxHeight: Number,
+      canSelect: Boolean
     },
     data: () => ({
       currentPositionX: 0,
@@ -22,8 +23,8 @@
     },
     methods: {
       detectArrowPress(event) {
-        if (this.canEmitKeydownEvent === false) {
-          //return;
+        if (this.canSelect === false) {
+          return;
         }
         let pageAdvance = 0;
         let emitEvent = false;

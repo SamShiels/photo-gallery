@@ -7,13 +7,14 @@
     >
       <PhotoHandler
         :imageSource="imageSources[n - 1 + currentPage * maxImagesY]"
-        :placeholderSource="placeholderSource"
+        :placeholderSource="imageSources[n - 1 + currentPage * maxImagesY]"
         :selected="selectedImageSource === n - 1"
       ></PhotoHandler>
     </div>
     <PhotoSelector
       :maxWidth="maxImagesX"
       :maxHeight="maxImagesY"
+      :canSelect="canSelect"
       v-on:keypressed="selectionChanged"
     ></PhotoSelector>
   </div>
@@ -41,8 +42,9 @@ export default {
     PhotoSelector,
   },
   props: {
-    topic: String,
-    gridHeight: Number
+    topic: Object,
+    gridHeight: Number,
+    canSelect: Boolean
   },
   data: () => ({
     imageSources: [],
@@ -68,10 +70,15 @@ export default {
       // This is because of html parenting.
       const valueString = value.toString()+'px';
       this.gridStyle.maxHeight = valueString;
+    },
+    topic: function() {
+      this.imageSources = [];
+      this.imageSourceTargetCount = 0;
+      this.currentPage = 0;
+      this.calculateMaxImages();
     }
   },
   mounted() {
-    //this.loadImages(10, 1);
     this.calculateMaxImages();
     window.addEventListener('resize', this.calculateMaxImages);
   },
@@ -80,7 +87,7 @@ export default {
       const axios = require('axios');
       this.imageSourceTargetCount += amount;
 
-      axios.get(`https://api.unsplash.com/topics/${this.topic}/photos?client_id=${this.$unSplashAPIKey}&per_page=${amount.toString()}&page=${page.toString()}`)
+      axios.get(`https://api.unsplash.com/topics/${this.topic.slug}/photos?client_id=${this.$unSplashAPIKey}&per_page=${amount.toString()}&page=${page.toString()}`)
       .then(res => {
         console.log(res);
 

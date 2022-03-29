@@ -16,3 +16,9 @@ Use the following command to build and run the project on a local dev server:
 npm run serve
 ```
 Open your browser and navigate to `localhost:8080`
+
+### Controls
+
+Use the arrow keys to navigate through the grid of photos. You can scroll to the right and left by selecting photos off-screen.
+
+The current photo topic can be changed by pressing the `escape` key. This opens a left-side drawer which contains a list of topics. You can then scroll through them using the `up` and `down` arrow keys.

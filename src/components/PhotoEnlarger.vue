@@ -51,8 +51,8 @@
         if (this.dialog === false) {
           return;
         }
-        if (event.keyCode === 27) {
-          // escape
+        if (event.keyCode === 27 || event.keyCode === 81) {
+          // escape or 'q'
           this.dialog = false;
         }
       }

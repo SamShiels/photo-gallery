@@ -101,7 +101,7 @@ export default {
       this.gridHeight = window.innerHeight - 64;
     },
     detectKeyPress(event) {
-      if (event.keyCode === 9) {
+      if (event.keyCode === 81) {
         this.drawer = !this.drawer;
       }
 
